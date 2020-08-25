@@ -69,7 +69,19 @@ export const constantRoutes = [
         meta: { title: 'Tree', icon: 'tree' }
       }
     ]
+  },{
+    path: '/uploadExcel',
+    component:Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'UploadExcel',
+        component: () => import('@/views/uploadExcel/index'),
+        meta: {title: '上传excel',icon: 'dashboard'},
+      }
+    ]
   }
+
 ]
 // 需要权限的路由表
 export const asyncRoutes = [
@@ -140,7 +152,7 @@ export const asyncRoutes = [
         path: 'menu2',
         component: () => import('@/views/nested/menu2/index'),
         name: 'Menu2',
-        meta: { title: 'menu2',roles:['peng']}
+        meta: { title: 'menu2'}
       }
     ]
   },
