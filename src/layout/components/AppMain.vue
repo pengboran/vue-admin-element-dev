@@ -52,7 +52,7 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
-  background-color: #463F3A;
+  background-color: #363c46;
 }
 .fixed-header+.app-main-pad50 {
   padding-top: 50px;

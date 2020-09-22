@@ -7,7 +7,12 @@
         class="hamburger-container"
         @toggleClick="toggleSideBar"
       />
-      <p class="admin-title">小巨人后台管理系统</p>
+      <div class="admin-title">小巨人后台管理系统</div>
+      <div class="greetings">
+        <span>{{ timeFix }}</span>
+        <span>{{ name }}</span>
+        <span>{{ welcome }}</span>
+        </div>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
@@ -35,6 +40,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { timeFix } from '@/utils/index'
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 
@@ -45,12 +51,15 @@ export default {
   },
   data() {
     return {
+      timeFix: timeFix(),
       avatar: require("@/assets/user.png"),
       showBread: true
     };
   },
   computed: {
-    ...mapGetters(["sidebar"])
+    ...mapGetters(
+      ['name',"sidebar",'welcome']
+      )
   },
   watch: {
     $route() {
@@ -102,6 +111,14 @@ export default {
       color: #fff;
       text-align: center;
       letter-spacing: 10px;
+    }
+    .greetings{
+          position: absolute;
+    right: 100px;
+    top: 0;
+    color: antiquewhite;
+    text-align: center;
+    line-height: 50px;
     }
     .right-menu {
       position: absolute;

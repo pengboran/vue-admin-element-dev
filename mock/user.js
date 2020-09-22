@@ -10,13 +10,13 @@ const tokens = {
 
 const users = {
   'admin-token': {
-    roles: ['admin'],
+    roles: ['/example/table','/nested/menu1/menu1-1','/nested/menu1/menu1-2/menu1-2-1'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin'
   },
   'editor-token': {
-    roles: ['editor'],
+    roles: ['/form/index','/nested/menu1/menu1-2/menu1-2-2','/nested/menu1/menu1-3','/nested/menu2'],
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Normal Editor'

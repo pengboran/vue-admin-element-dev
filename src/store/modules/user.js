@@ -1,13 +1,15 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { welcome } from '@/utils/index'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    welcome:''
   }
 }
 
@@ -20,8 +22,9 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
+  SET_NAME: (state,  { name, welcome }) => {
     state.name = name
+    state.welcome = welcome
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -39,8 +42,8 @@ const actions = {
   // 可以在 action 内部执行异步操作
   login({ commit }, userInfo) {
     const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+    return new Promise((resolve, reject) => { 
+      login({ username: username.trim(), password: password.trim() }).then(response => {
         const { data } = response
         // console.log(data)
    // 更改store中的状态 通过提交mutations 调用commit方法，第一个参数 一个回调函数，执行修改逻辑的函数，第二个 是mutations的载荷(一般为你需要修改的状态值)
@@ -69,7 +72,7 @@ const actions = {
       reject('getInfo: roles must be a non-null array!')
     }
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
+        commit('SET_NAME', { name: name, welcome: welcome() })
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {

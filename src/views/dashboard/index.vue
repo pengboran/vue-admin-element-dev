@@ -1,7 +1,11 @@
 <template>
   <div class="dashboard-container">
     <div class="boxName">{{ getName }}<span><i class="icon-touxiang iconfont"></i></span></div>
-    <el-button type="primary" @click="setName">改变name</el-button>
+     <router-link :to="{path:'/form/index',query:{id:id}}" tag="el-button">
+       toFrom
+    </router-link>
+    <el-button @click="btnClick">打印router</el-button>
+    <!-- <el-button type="success" @click="toForm">去表单页</el-button> -->
     <!-- 中国地图 -->
     <china-map></china-map>
     <!-- 柱状图 -->
@@ -23,10 +27,10 @@
 import { mapGetters,mapState , mapMutations} from 'vuex';
 import { mutations } from '@/store/modules/user.js';
 import "../../../node_modules/echarts/map/js/china.js"; // 引入中国地图数据
-import bar from "@/components/echarts/bar";
-import chinaMap from "@/components/echarts/chinaMap";
-import dataZoom from "@/components/echarts/dataZoom";
-import echartLegend from "@/components/echarts/legend"
+import bar from "@/components/Echarts/bar";
+import chinaMap from "@/components/Echarts/chinaMap";
+import dataZoom from "@/components/Echarts/dataZoom";
+import echartLegend from "@/components/Echarts/legend"
 export default {
   name: "Dashboard",
   computed: {
@@ -45,7 +49,7 @@ export default {
   },
   data() {
     return {
-      
+       id:'123'
     };
   },
   components: {
@@ -58,10 +62,18 @@ export default {
   methods: {
     setName(){
       // vuex如果分为几个模块，方法是在模块中的话，如果直接在组件中通过this.$store.commit("方法名")是获取不到，必须要在前面加上模块名，如this.$store.commit("模块名/方法名")才可以获取到
-        this.$store.commit('user/SET_NAME', 'pengboran')
-        console.log(this.$store.state.user.name)
-        console.log(this.$store.state.user)
+        // this.$store.commit('user/SET_NAME', 'pengboran')
+        // console.log(this.$store.state.user.name)
+        // console.log(this.$store.state.user)
+        // this.$router.push({path:'/form/index'})
     },
+    toForm(){
+      this.$router.push({path:'/form/index',query:{id:'123'}})
+    },
+    btnClick() {
+      console.log(this.$router)
+      console.log(this.$route)
+    }
   },
 };
 </script>
@@ -81,5 +93,9 @@ export default {
 }
 .legend{
   margin-top: 100px;
+}
+.pan-btn{
+  width: 50px;
+  height: 50px;
 }
 </style>

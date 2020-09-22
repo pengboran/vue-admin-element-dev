@@ -1,13 +1,13 @@
 // sidebar
 $menuText:#bfcbd9;
 $menuActiveText:#409EFF;
-$subMenuActiveText:#f4f4f5; //https://github.com/ElemeFE/element/issues/12951
+$subMenuActiveText:#f4f4f5; // https://github.com/ElemeFE/element/issues/12951
 
-$menuBg:#010B1F;
-$menuHover:#263445;
+$menuBg:#090e14;  // 菜单整体背景
+$menuHover:#263445; // 菜单悬浮变色
 
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+$subMenuBg:#090e14; // 子菜单背景
+$subMenuHover:#344457; // 子菜单悬浮背景
 
 $sideBarWidth: 210px;
 

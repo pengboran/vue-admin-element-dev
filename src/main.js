@@ -19,8 +19,12 @@ import './plugins/element.js'
 // 引入阿里图标库
 import './assets/iconfont/iconfont.css'
 
+// 所有组件继承vue的原型  在vue原型上加上$echarts 所有组件都可用
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts 
+
+import moment from 'moment'
+Vue.prototype.$moment = moment;//赋值使用
 
 
 
@@ -39,9 +43,9 @@ Vue.prototype.$echarts = echarts
 // }
 
 // // set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
+// Vue.use(ElementUI, { locale })
 // // 如果想要中文版 element-ui，按如下方式声明
-// Vue.use(ElementUI)
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 

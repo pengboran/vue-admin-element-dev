@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <p>{{ getId }}</p>
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name" />
@@ -62,6 +63,11 @@ export default {
         desc: ''
       }
     }
+  },
+  computed:{
+      getId() {
+        return this.$route.query.id
+      }
   },
   methods: {
     onSubmit() {
