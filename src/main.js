@@ -19,6 +19,9 @@ import './plugins/element.js'
 // 引入阿里图标库
 import './assets/iconfont/iconfont.css'
 
+import md5 from 'js-md5';
+Vue.prototype.$md5 = md5;
+
 // 所有组件继承vue的原型  在vue原型上加上$echarts 所有组件都可用
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts 
@@ -26,25 +29,12 @@ Vue.prototype.$echarts = echarts
 import moment from 'moment'
 Vue.prototype.$moment = moment;//赋值使用
 
+import components from './components/' //加载公共组件
+Object.keys(components).forEach((key)=>{
+  var name = key.toString()
+  Vue.component(name,components[key]) // 全局注册
+})
 
-
-
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online ! ! !
- */
-// if (process.env.NODE_ENV === 'production') {
-//   const { mockXHR } = require('../mock')
-//   mockXHR()
-// }
-
-// // set ElementUI lang to EN
-// Vue.use(ElementUI, { locale })
-// // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false

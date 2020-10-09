@@ -82,11 +82,38 @@ export const constantRoutes = [
       name:'tableDemo',
       component: () => import('@/views/tableDemo/index'),
       meta: {
-        title:'物资管理',
+        title:'员工管理',
         icon: 'table'
       }
      }
 
+    ]
+  },
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/account',
+    meta: {title:'权限管理', icon: 'role'},
+    name: 'Permission',
+    children: [
+      {
+        path: 'account',
+        name: 'Account',
+        component: () => import('@/views/permission/account'),
+        meta: {title:'账号管理'}
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/permission/role'),
+        meta: {title:'角色管理'}
+      },
+      {
+        path: 'dept',
+        name: 'Dept',
+        component: () => import('@/views/permission/dept'),
+        meta: {title:'部门管理'}
+      }
     ]
   }
 
@@ -104,13 +131,13 @@ export const asyncRoutes = [
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: { title: '客户管理', icon: 'table',roles:'/example/table'}
+        meta: { title: '客户管理', icon: 'table',roles:['peng']}
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: '合同管理', icon: 'tree'}
+        meta: { title: '项目管理', icon: 'tree'}
       }
     ]
   },
@@ -122,7 +149,7 @@ export const asyncRoutes = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '项目管理', icon: 'form',roles:'/form/index'}
+        meta: { title: '物质管理', icon: 'form',roles:['admin1','peng']}
       }
     ]
   },
@@ -147,7 +174,7 @@ export const asyncRoutes = [
             path: 'menu1-1',
             component: () => import('@/views/nested/menu1/menu1-1'),
             name: 'Menu1-1',
-            meta: { title: 'Menu1-1',roles:'/nested/menu1/menu1-1'}
+            meta: { title: 'Menu1-1',roles:['peng']}
           },
           {
             path: 'menu1-2',
@@ -159,13 +186,13 @@ export const asyncRoutes = [
                 path: 'menu1-2-1',
                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1',roles:'/nested/menu1/menu1-2/menu1-2-1'}
+                meta: { title: 'Menu1-2-1'}
               },
               {
                 path: 'menu1-2-2',
                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2',roles:'/nested/menu1/menu1-2/menu1-2-2'}
+                meta: { title: 'Menu1-2-2'}
               }
             ]
           },
@@ -173,7 +200,7 @@ export const asyncRoutes = [
             path: 'menu1-3',
             component: () => import('@/views/nested/menu1/menu1-3'),
             name: 'Menu1-3',
-            meta: { title: 'Menu1-3',roles:'/nested/menu1/menu1-3'}
+            meta: { title: 'Menu1-3'}
           }
         ]
       },
@@ -181,7 +208,7 @@ export const asyncRoutes = [
         path: 'menu2',
         component: () => import('@/views/nested/menu2/index'),
         name: 'Menu2',
-        meta: { title: 'menu2',roles:'/nested/menu2'}
+        meta: { title: 'menu2'}
       }
     ]
   },

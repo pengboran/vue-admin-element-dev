@@ -6,15 +6,15 @@
         <h3 class="title">Login Form</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="userId">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
+          ref="userId"
+          v-model="loginForm.userId"
           placeholder="请输入账号"
-          name="username"
+          name="userId"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -48,13 +48,13 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+// import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
+      if (!value) {
         callback(new Error('请输入账号'))
       } else {
         callback()
@@ -69,11 +69,11 @@ export default {
     }
     return {
       loginForm: {
-        username: '',
-        password: ''
+        userId: '18030779396',
+        password: '670B14728AD9902AECBA32E22FA4F6BD'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        userId: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
@@ -110,7 +110,7 @@ export default {
         if (valid) {
           this.loading = true
           //  通过 store.dispatch 方法触发Action 此时调用store中user模块的login方法，支持载荷方式(带参数)及对象方式
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then((res) => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false
           }).catch(() => {

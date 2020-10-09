@@ -9,7 +9,7 @@
         @click="handleDownload"
         :loading="downloadLoading"
       >导出</el-button>
-      <el-button type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+      <el-button type="primary" icon="el-icon-edit" @click="handleCreate" v-if="checkAdd">添加</el-button>
     </div>
     <el-table :data="tableData" stripe border highlight-current-row style="width:100%" fit>
       <el-table-column label="序号" width="80px" align="center">
@@ -137,9 +137,17 @@ export default {
           age: "29",
         },
       ],
+      addList:['admin1'], // 可操作添加按钮的角色列表 前端定义 
     };
   },
-  computed: {},
+  computed: {
+     checkAdd(){
+       return JSON.parse(localStorage.getItem('roleIdList')).some(role => this.addList.includes(role))
+     }
+  },
+  created(){
+    
+  },
   methods: {
     // 编辑
     handEdit(index, row) {
@@ -207,11 +215,11 @@ export default {
       this.$refs["dataForm"].validate((valid) => {
         if (valid) {
           this.form.id = parseInt(Math.random() * 100) + 1024; // mock a id
-          // createArticle(this.temp).then(() => { // 请求添加接口
+          // createArticle(this.form).then(() => { // 请求添加接口
       
           // });
             this.form.date = parseTime(+new Date(this.form.date));
-            this.tableData.unshift(this.form);
+            this.tableData.unshift(this.form); // 添加数据
             console.log(this.form)
             this.dialogFormVisible = false;
             this.$notify({
@@ -227,9 +235,9 @@ export default {
     updateData() {
       const tempData = Object.assign({}, this.form); // 将form对象深度复制给tempata
       tempData.date = parseTime(+new Date(tempData.date)); // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464 将选择的时间转化为毫秒
-      const index = this.tableData.findIndex((v) => v.id === this.form.id);
+      const index = this.tableData.findIndex((v) => v.id === this.form.id); // 找到当前索引
       this.form.date = tempData.date;
-      this.tableData.splice(index, 1, this.form);
+      this.tableData.splice(index, 1, this.form); 修改
       this.dialogFormVisible = false;
       console.log(this.form);
       this.$notify({

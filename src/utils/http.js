@@ -8,8 +8,8 @@ import { getToken } from '@/utils/auth'
 const loginUrl = '/login'
 
 // 根据环境切换接口地址
-axios.defaults.baseURL = process.env.VUE_APP_BASE_API
-axios.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest' }
+axios.defaults.baseURL =  process.env.VUE_APP_BASE_API
+// axios.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest' }
 axios.defaults.timeout = 60000
 
 const service = axios.create()
@@ -23,7 +23,7 @@ service.interceptors.request.use(
         router.replace({ path: loginUrl, query: { redirect: router.currentRoute.fullPath }}) // query内含当前页面的路由，以便登录后能操作返回当前页面
         return false
       } else {
-        config.headers['X-Token'] =  token // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改 到时与后端商讨
+        config.headers['Authorization'] =  "Bearer " + token // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改 
       }
     }
     return config
@@ -33,6 +33,7 @@ service.interceptors.request.use(
   }
 )
 
+// 响应拦截器(异常处理)
 // 响应拦截器(异常处理)
 service.interceptors.response.use(
   response => {
@@ -82,56 +83,62 @@ service.interceptors.response.use(
   }
 )
 
-const request = options => {
-  let {
-    url, // 请求路径
-    method = 'GET', // 请求方式
-    data, // 请求参数
-    showErr = true, // 是否显示错误信息
-    noQs = false // 不需要序列化数据
-  } = options
-
-  const methodType = method.toUpperCase()
-  const axData = {
-    url: URL + url
-  }
-
-  switch (methodType) {
-    case 'GET':// get请求
-      data.t = new Date().getTime() // 请求随机数，防止ie缓存
-      axData.type = 'get'
-      axData.params = data
-      break
-    case 'POST': // post请求
-      if (!noQs) {
-        data = Qs.stringify(data)
-      }
-      axData.method = 'post'
-      axData.data = data
-      break
-    default:
-      break
-  }
-
-  return service(axData).then(res => {
-    const serveData = res.data
-    // 显示错误信息，排除需要登录情况
-    if (showErr && serveData.code !== 200) {
-      Message.warning(serveData.message)
-    }
-    return serveData
-  }).catch(err => {
-    // 显示错误信息
-    if (showErr) {
-      Message.warning(err)
-    }
-    return err
+/** 
+ * get方法，对应get请求 
+ * @param {String} url [请求的url地址] 
+ * @param {Object} params [请求时携带的参数] 
+ */
+export function get(url, params){    
+  return new Promise((resolve, reject) =>{        
+      axios.get(url, {            
+          params: params        
+      })        
+      .then(res => {            
+          resolve(res);        
+      })        
+      .catch(err => {            
+          reject(err)        
+      })    
+  });
+}
+/** 
+* post方法，对应post请求 
+* @param {String} url [请求的url地址] 
+* @param {Object} params [请求时携带的参数] 
+*/
+export function post(url, params,dataType = 'J') {    
+  return new Promise((resolve, reject) => {         
+      axios.post(url, dataType == 'no' ? params : (dataType == 'S' ? Qs.stringify(params) : Qs.parse(Qs.stringify(params))))        
+      .then(res => {            
+          resolve(res);        
+      })        
+      .catch(err => {            
+          reject(err)        
+      })    
+  });
+}
+export function delet(url, params){
+  return new Promise((resolve,reject) => {
+    axios.delete(url,{
+      params: params
+    })
+    .then(res=>{
+      resolve(res)
+    })
+    .catch(err=>{
+      reject(err)
+    })
   })
 }
-
-export const $http = {
-  get: (url, data = {}, option) => request({ method: 'GET', url, data, ...option }),
-  post: (url, data = {}, option) => request({ method: 'POST', url, data, ...option })
+export function put(url, params,dataType = 'J') {    
+  return new Promise((resolve, reject) => {         
+      axios.put(url, dataType == 'no' ? params : (dataType == 'S' ? Qs.stringify(params) : Qs.parse(Qs.stringify(params))))        
+      .then(res => {            
+          resolve(res);        
+      })        
+      .catch(err => {            
+          reject(err)        
+      })    
+  });
 }
-
 export default axios

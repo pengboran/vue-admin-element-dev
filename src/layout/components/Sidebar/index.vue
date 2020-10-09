@@ -31,9 +31,9 @@ export default {
       'permission_routes',
       'sidebar'
     ]),
-    // routes() {
-    //   return this.$store.state.user.routes  //获取路由 进行侧边栏的渲染
-    // },
+    routes() {
+      return this.$router.options.routes  //获取路由 进行侧边栏的渲染
+    },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

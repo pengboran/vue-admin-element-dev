@@ -4,7 +4,8 @@
      <router-link :to="{path:'/form/index',query:{id:id}}" tag="el-button">
        toFrom
     </router-link>
-    <el-button @click="btnClick">打印router</el-button>
+    <el-button @click="setName">设置store</el-button>
+    <!-- <el-button @click="setName">name</el-button> -->
     <!-- <el-button type="success" @click="toForm">去表单页</el-button> -->
     <!-- 中国地图 -->
     <china-map></china-map>
@@ -18,7 +19,6 @@
     <div class="echart-box legend">
       <echart-Legend></echart-Legend>
     </div>
-    
   </div>
   
 </template>
@@ -30,7 +30,8 @@ import "../../../node_modules/echarts/map/js/china.js"; // 引入中国地图数
 import bar from "@/components/Echarts/bar";
 import chinaMap from "@/components/Echarts/chinaMap";
 import dataZoom from "@/components/Echarts/dataZoom";
-import echartLegend from "@/components/Echarts/legend"
+import echartLegend from "@/components/Echarts/legend";
+import { getInfo } from '@/api/user/user'
 export default {
   name: "Dashboard",
   computed: {
@@ -41,6 +42,7 @@ export default {
   ]),
   // 通过属性访问
   getName(){
+    
     return this.$store.state.user.name  // or this.$store.getters.name
   },
   // ...mapState([
@@ -66,6 +68,9 @@ export default {
         // console.log(this.$store.state.user.name)
         // console.log(this.$store.state.user)
         // this.$router.push({path:'/form/index'})
+      getInfo({id:localStorage.getItem('userId')}).then(res=>{
+        console.log(res)
+      })
     },
     toForm(){
       this.$router.push({path:'/form/index',query:{id:'123'}})
