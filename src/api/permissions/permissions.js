@@ -51,3 +51,12 @@ export const changeRole = data => put('role',data)
 export const addRole = data => post('role',data)
 // 注销/删除角色
 export const deleteRole = data => delet('role',data)
+
+
+// 部门管理
+// 修改组织机构信息
+export const changeOrganization = data => put('organization',data)
+// 删除组织机构信息
+export const deleteOrganization = data => delet('organization',data)
+// 新增组织机构信息
+export const addOrganization = data => post('organization',data)

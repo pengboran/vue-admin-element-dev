@@ -342,24 +342,18 @@ export default {
       getRoleMenu({ id: row.id, parentId: 0 }).then((res) => {
         if (res.data.success) {
           this.dialogPerisVisible = true;
-          if ((res.data.content && res.data.content.children == null) || res.data.content == null) {
-            this.role.menuIdArray = [];
-          } else {
-            this.role.menuIdArray = this.generateArr(res.data.content.children);
-          }
-             let that = this;
+          let that = this;
+          that.$nextTick(() => {
+            that.$refs.tree.setCheckedKeys([]); // 点击的时候先置空勾选
             setTimeout(() => {
-              this.role.menuIdArray.forEach((value) => {
+              that.generateArr(res.data.content.children).forEach((value) => {
                 that.$refs.tree.setChecked(value, true, false);
               });
-            }, 100);
-          // console.log(this.generateArr(res.data.content.children))
+            }, 500);
+          });
         }
       });
-      // this.$nextTick(() => {
-      //   this.$refs.tree.setCheckedNodes(res.data.content.children) // 挂载到tree上 显示勾选
-      //    this.checkStrictly = false
-      // });
+      // this.$nextTick(() => {});
     },
     confirmRole() {
       const checkedKeys = this.$refs.tree.getCheckedKeys(); // 获取勾选的值 值为路由中的id 返回一个数组

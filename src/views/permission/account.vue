@@ -3,10 +3,11 @@
     <div class="filter-container">
       <el-input
         v-model="searchValue"
-        placeholder="请输搜索的入内容"
+        placeholder="请输搜索的名字"
         class="searchInput"
+        @keyup.enter.native="serch"
       ></el-input>
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      <el-button type="primary" icon="el-icon-search" @click="serch">搜索</el-button>
       <!-- <el-button
         type="primary"
         icon="el-icon-download"
@@ -17,7 +18,7 @@
         type="primary"
         icon="el-icon-edit"
         @click="handleCreate"
-        v-if="checkAdd"
+        v-permission="['admin1']"
         >添加</el-button
       >
     </div>
@@ -74,16 +75,16 @@
           >
         </template>
       </el-table-column>
-      <el-table-column label="用户类型" width="200px" align="center">
+      <!-- <el-table-column label="用户类型" width="200px" align="center">
         <template slot-scope="scope">
           <el-tag type="success">{{
             scope.row.userType == 0 ? "普通用户" : "管理员"
           }}</el-tag>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handEdit(scope.$index, scope.row)"
+          <el-button size="mini" type="primary" @click="handEdit(scope.$index, scope.row)"
             >编辑</el-button
           >
           <el-button
@@ -174,12 +175,12 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户属性" prop="userType" label-width="100px">
+        <!-- <el-form-item label="用户属性" prop="userType" label-width="100px">
           <el-radio-group v-model="form.userType">
             <el-radio :label="num1">普通用户</el-radio>
             <el-radio :label="num2">管理员</el-radio>
           </el-radio-group>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -248,6 +249,7 @@ export default {
         pageSize: 20,
       },
       tableData: [], // 人员表格数据
+      otableData:[],
       calendarTypeOptions: [], // 可选的所有部门
       allRoles: [], // 可选的所有角色
       formLabelWidth: "120px",
@@ -259,9 +261,9 @@ export default {
         ],
         orgRankId: [{ required: true, message: "部门必填", trigger: "change" }],
         roleIds: [{ required: true, message: "角色必填", trigger: "change" }],
-        userType: [
-          { required: true, message: "用户属性必填", trigger: "change" },
-        ],
+        // userType: [
+        //   { required: true, message: "用户属性必填", trigger: "change" },
+        // ],
       },
       addList: ["admin1"], // 可操作添加按钮的角色列表 前端定义
     };
@@ -283,7 +285,7 @@ export default {
     getOrganization() {
       getOrganization().then((res) => {
         this.calendarTypeOptions = this.getTreeData(res.data.content.children);
-        console.log(res.data.content.children);
+        // console.log(res.data.content.children);
       });
     },
     // children为空时设置为undefined 解决级选择器出现空白选项的问题
@@ -310,6 +312,7 @@ export default {
       this.listLoading = true;
       getUserList(this.listQuery).then((res) => {
         this.tableData = res.data.content;
+        this.otableData = res.data.content;
         this.total = res.data.pagination.total;
         setTimeout(() => {
           this.listLoading = false;
@@ -361,9 +364,13 @@ export default {
         roleIds: [], // 角色Id数组
       };
     },
+    // 搜索
+    serch(){
+         this.tableData = this.otableData.filter( item => (~item.userName.indexOf(this.searchValue))) 
+    },
     // 点击 编辑
     handEdit(index, row) {
-      console.log(index, row);
+      // console.log(index, row);
       this.dialogFormVisible = true;
       this.dialogStatus = "update";
       this.form = Object.assign({}, row); // copy obj

@@ -47,53 +47,15 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard'}
     }]
-  },
-  {
-    path:'/calendar',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'calendar',
-        component: () => import('@/views/calendar/index'),
-        meta: {title: '日历',icon:'tree'}
-      }
-
-    ]
-  },
-  {
-    path: '/uploadExcel',
-    component:Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'UploadExcel',
-        component: () => import('@/views/uploadExcel/index'),
-        meta: {title: '上传excel',icon: 'dashboard'},
-      }
-    ]
-  },
-  {
-    path: '/tableDemo',
-    component: Layout,
-    children:[
-     {
-      path: 'index',
-      name:'tableDemo',
-      component: () => import('@/views/tableDemo/index'),
-      meta: {
-        title:'员工管理',
-        icon: 'table'
-      }
-     }
-
-    ]
-  },
+  }
+]
+// 需要权限的路由表
+export const asyncRoutes = [
   {
     path: '/permission',
     component: Layout,
     redirect: '/permission/account',
-    meta: {title:'权限管理', icon: 'role'},
+    meta: {title:'系统权限管理', icon: 'role'},
     name: 'Permission',
     children: [
       {
@@ -115,29 +77,25 @@ export const constantRoutes = [
         meta: {title:'部门管理'}
       }
     ]
-  }
-
-]
-// 需要权限的路由表
-export const asyncRoutes = [
+  },
   {
-    path: '/example',
+    path: '/clientsAndOrder',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: '合同管理', icon: 'dashboard' },
+    redirect: '/clientsAndOrder/clients',
+    name: 'ClientsAndOrder',
+    meta: { title: '客户及订单管理', icon: 'dashboard' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '客户管理', icon: 'table',roles:['peng']}
+        path: 'clients',
+        name: 'Clients',
+        component: () => import('@/views/clientsAndOrder/clients/index'),
+        meta: { title: '客户管理', icon: 'table'}
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '项目管理', icon: 'tree'}
+        path: 'order',
+        name: 'Order',
+        component: () => import('@/views/clientsAndOrder/order/index'),
+        meta: { title: '订单管理', icon: 'tree'}
       }
     ]
   },

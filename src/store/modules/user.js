@@ -52,7 +52,7 @@ const actions = {
         //  console.log(data)
     // 更改store中的状态 通过提交mutations 调用commit方法，第一个参数 一个回调函数，执行修改逻辑的函数，第二个 是mutations的载荷(一般为你需要修改的状态值)
         commit('SET_TOKEN', data.content.token) 
-        commit('SET_ROLES', data.content.user.roles)
+        // commit('SET_ROLES', data.content.user.roles)
         commit('SET_ID', data.content.user.id)
         setToken(data.content.token) // 将token设置到cooke中
         setLocalStorage('userId',data.content.user.id)
@@ -81,6 +81,7 @@ const actions = {
         for(let item of rolesList){
           rolesIdList.push(item.roleId)
         }
+        commit('SET_ROLES', rolesIdList)
         setLocalStorage('roleIdList',rolesIdList) // 用户所有的角色ID值 列表 存入本地
         resolve(data.content)
       }).catch(error => {

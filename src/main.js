@@ -38,6 +38,9 @@ Object.keys(components).forEach((key)=>{
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+// 权限判断指令
+import permission from '@/directive/permission/index.js' 
+Vue.directive('permission', permission)
 
 new Vue({
   el: '#app',
